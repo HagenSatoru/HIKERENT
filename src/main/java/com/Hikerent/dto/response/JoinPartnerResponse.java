@@ -1,5 +1,6 @@
 package com.Hikerent.dto.response;
 
+import com.Hikerent.enums.JoinPartnerStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -17,4 +18,21 @@ public class JoinPartnerResponse {
 
     private LocalDateTime tanggalDaftar;
 
+    public void setUserId(Long id) {
+    }
+
+    public void setAlamat(String alamat) {
+    }
+
+    public void setNomorTelepon(String nomorWhatsapp) {
+    }
+
+    public void setEmail(String emailUsaha) {
+    }
+
+    public void setDeskripsi(String deskripsi) {
+    }
+
+    public void setStatus(JoinPartnerStatus status) {
+    }
 }

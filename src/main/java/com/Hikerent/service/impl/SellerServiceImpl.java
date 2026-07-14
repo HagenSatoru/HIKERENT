@@ -35,7 +35,7 @@ public class SellerServiceImpl implements SellerService {
                 )
 
                 .alamat(
-                        request.getAlamat()
+                        request.getAlamatToko()
                 )
 
                 .nomorTelepon(

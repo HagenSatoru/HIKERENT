@@ -19,4 +19,9 @@ public class FinancialReportResponse {
 
     private String namaPartner;
 
+    public void setSellerId(Long id) {
+    }
+
+    public void setOrganizerId(Long id) {
+    }
 }
