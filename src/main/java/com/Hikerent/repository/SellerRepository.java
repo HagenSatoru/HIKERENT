@@ -1,0 +1,15 @@
+package com.Hikerent.repository;
+
+import com.Hikerent.entity.Seller;
+import com.Hikerent.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface SellerRepository extends JpaRepository<Seller, Long> {
+
+    Optional<Seller> findByUser(User user);
+
+}
