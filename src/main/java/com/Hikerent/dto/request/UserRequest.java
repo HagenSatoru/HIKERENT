@@ -1,9 +1,7 @@
 package com.Hikerent.dto.request;
 
-
 import com.Hikerent.enums.Role;
 import lombok.*;
-
 
 @Getter
 @Setter
@@ -11,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 public class UserRequest {
 
+    private String nama;
 
     private String username;
 
@@ -18,7 +17,12 @@ public class UserRequest {
 
     private String password;
 
-    private Role role;
+    private String noHp;
 
+    private String alamat;
+
+    private String foto;
+
+    private Role role;
 
 }

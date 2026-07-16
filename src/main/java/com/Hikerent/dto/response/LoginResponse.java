@@ -1,6 +1,5 @@
 package com.Hikerent.dto.response;
 
-
 import lombok.*;
 
 @Getter
@@ -9,12 +8,12 @@ import lombok.*;
 @AllArgsConstructor
 public class LoginResponse {
 
-
     private String message;
 
     private String email;
 
     private String role;
 
+    private String token;
 
 }
