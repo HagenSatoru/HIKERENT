@@ -1,6 +1,5 @@
 package com.Hikerent.dto.request;
 
-import com.Hikerent.enums.Role;
 import lombok.Data;
 
 @Data
@@ -14,12 +13,8 @@ public class RegisterRequest {
 
     private String password;
 
-    private String noHp;
+    private String nohp;
 
     private String alamat;
-
-    private String foto;
-
-    private Role role;
 
 }

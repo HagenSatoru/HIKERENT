@@ -2,7 +2,7 @@ package com.Hikerent.enums;
 
 public enum Role {
 
-    USER,
+    GUEST,
     ADMIN,
     SELLER,
     ORGANIZER
