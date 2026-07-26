@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.security.core.Authentication;
 
 
 
@@ -40,7 +41,12 @@ public class UserController {
     }
 
 
-
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> getCurrentUser(Authentication authentication) {
+        return ResponseEntity.ok(
+                userService.getByEmail(authentication.getName())
+        );
+    }
 
 
     // =========================
@@ -102,8 +108,43 @@ public class UserController {
 
 
 
+    @GetMapping("/profile")
+    public ResponseEntity<UserResponse> getProfile(Authentication authentication) {
+        return ResponseEntity.ok(
+                userService.getByEmail(authentication.getName())
+        );
+    }
 
+    // =========================
+    // UPDATE CURRENT USER PROFILE (/api/users/me)
+    // =========================
+    @PutMapping("/me")
+    public ResponseEntity<UserResponse> updateProfile(
+            Authentication authentication,
+            @RequestBody UserRequest request
+    ) {
+        // 1. Ambil email dari token yang sedang aktif
+        String email = authentication.getName();
 
+        // 2. Ambil data user lama secara utuh dari database
+        UserResponse currentUser = userService.getByEmail(email);
+
+        // 3. Jaga agar email tidak menjadi null
+        if (request.getEmail() == null || request.getEmail().trim().isEmpty()) {
+            request.setEmail(currentUser.getEmail());
+        }
+
+        // 4. PENTING: Jaga agar password tidak ikut tereset menjadi null
+        // (Asumsi di UserRequest ada method getPassword/setPassword, atau ambil dari entitas aslinya di service)
+        if (request.getPassword() == null || request.getPassword().trim().isEmpty()) {
+            // Jika service Anda butuh password, ambil dari user lama
+            // atau pastikan logic update di UserService tidak menimpa password jika kosong.
+        }
+
+        return ResponseEntity.ok(
+                userService.update(currentUser.getId(), request)
+        );
+    }
     // =========================
     // DELETE USER
     // =========================

@@ -38,9 +38,15 @@ public class Product {
     @Column(nullable = false)
     private Boolean tersedia;
 
+    // Seller sekarang bisa null jika produk ini milik Organizer
     @ManyToOne
-    @JoinColumn(name = "seller_id")
+    @JoinColumn(name = "seller_id", nullable = true)
     private Seller seller;
+
+    // Relasi baru ke Organizer (bisa null jika produk milik Seller umum)
+    @ManyToOne
+    @JoinColumn(name = "organizer_id", nullable = true)
+    private Organizer organizer;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

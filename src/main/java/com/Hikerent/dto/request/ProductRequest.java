@@ -18,7 +18,9 @@ public class ProductRequest {
 
     private Boolean tersedia;
 
-    private Long sellerId;
+    private Long sellerId;     // Opsional (bisa null jika milik organizer)
+
+    private Long organizerId;  // Tambahan: Opsional (bisa null jika milik seller)
 
     private Long categoryId;
 

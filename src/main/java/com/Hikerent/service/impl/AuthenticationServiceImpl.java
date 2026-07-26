@@ -185,9 +185,7 @@ public class AuthenticationServiceImpl
         );
 
 
-        response.setRole(
-                user.getRole().name()
-        );
+        response.setRole(user.getRole());
 
 
         return response;

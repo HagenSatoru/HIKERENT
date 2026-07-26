@@ -20,7 +20,9 @@ public class ProductResponse {
 
     private Boolean tersedia;
 
-    private String namaSeller;
+    private String namaSeller;     // Akan terisi jika produk milik seller (bisa null)
+
+    private String namaOrganizer;  // Tambahan: Akan terisi jika produk milik organizer (bisa null)
 
     private String namaKategori;
 

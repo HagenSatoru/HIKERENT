@@ -15,6 +15,8 @@ public interface ProductService {
 
     List<ProductResponse> getAll();
 
+    List<ProductResponse> getByOrganizerId(Long organizerId);
+
     List<ProductResponse> search(String keyword);
 
     void delete(Long id);

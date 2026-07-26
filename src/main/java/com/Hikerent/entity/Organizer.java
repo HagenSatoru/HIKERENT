@@ -22,6 +22,11 @@ public class Organizer {
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL)
     private List<OpenTrip> openTrips;
 
+    // Relasi baru: Organizer bisa memiliki banyak produk/alat sewaan untuk trip
+    @JsonIgnore
+    @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL)
+    private List<Product> products;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

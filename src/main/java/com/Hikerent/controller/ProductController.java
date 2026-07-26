@@ -52,6 +52,16 @@ public class ProductController {
         );
     }
 
+    // Endpoint baru: Mendapatkan produk/alat berdasarkan Organizer
+    @GetMapping("/organizer/{organizerId}")
+    public ResponseEntity<List<ProductResponse>> getByOrganizerId(
+            @PathVariable Long organizerId) {
+
+        return ResponseEntity.ok(
+                productService.getByOrganizerId(organizerId)
+        );
+    }
+
     @GetMapping("/search")
     public ResponseEntity<List<ProductResponse>> search(
             @RequestParam String keyword) {

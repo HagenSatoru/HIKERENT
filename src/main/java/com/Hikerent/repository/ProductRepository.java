@@ -21,4 +21,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findByTersedia(Boolean tersedia);
 
+    List<Product> findByOrganizerId(Long organizerId);
+
 }
