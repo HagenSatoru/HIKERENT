@@ -24,7 +24,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final SellerRepository sellerRepository;
-    private final OrganizerRepository organizerRepository; // Tambahan repository organizer
+    private final OrganizerRepository organizerRepository;
 
     @Override
     public ProductResponse create(ProductRequest request) {
@@ -35,7 +35,6 @@ public class ProductServiceImpl implements ProductService {
         Seller seller = null;
         Organizer organizer = null;
 
-        // Validasi kepemilikan produk: Harus milik Seller ATAU Organizer
         if (request.getSellerId() != null && request.getOrganizerId() != null) {
             throw new RuntimeException("Produk hanya boleh dimiliki oleh Seller ATAU Organizer, tidak keduanya.");
         }
@@ -97,9 +96,20 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductResponse> getByOrganizerId(Long organizerId) {
-        // Pastikan Anda menambahkan method ini di ProductRepository jika belum ada:
-        // List<Product> findByOrganizerId(Long organizerId);
         return productRepository.findByOrganizerId(organizerId)
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
+    // IMPLEMENTASI BARU: Mengambil produk berdasarkan email seller yang login dari Token
+    @Override
+    public List<ProductResponse> getBySellerEmail(String email) {
+        // Menggunakan findByUser_Email sesuai struktur relasi SellerRepository Anda
+        Seller seller = sellerRepository.findByUser_Email(email)
+                .orElseThrow(() -> new RuntimeException("Seller dengan email " + email + " tidak ditemukan"));
+
+        return productRepository.findBySellerId(seller.getId())
                 .stream()
                 .map(this::mapToResponse)
                 .toList();
@@ -128,17 +138,14 @@ public class ProductServiceImpl implements ProductService {
         response.setStok(product.getStok());
         response.setTersedia(product.getTersedia());
 
-        // Cek relasi category
         if (product.getCategory() != null) {
             response.setNamaKategori(product.getCategory().getNamaKategori());
         }
 
-        // Cek apakah milik Seller
         if (product.getSeller() != null) {
             response.setNamaSeller(product.getSeller().getNamaToko());
         }
 
-        // Cek apakah milik Organizer
         if (product.getOrganizer() != null) {
             response.setNamaOrganizer(product.getOrganizer().getNamaOrganizer());
         }

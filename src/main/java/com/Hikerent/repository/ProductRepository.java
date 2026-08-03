@@ -13,6 +13,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findBySeller(Seller seller);
 
+    // Tambahan untuk mencari produk berdasarkan ID seller secara langsung
+    List<Product> findBySellerId(Long sellerId);
+
     List<Product> findByCategory(Category category);
 
     List<Product> findByNamaProdukContainingIgnoreCase(String namaProduk);

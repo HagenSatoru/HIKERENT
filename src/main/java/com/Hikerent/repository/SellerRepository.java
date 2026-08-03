@@ -12,4 +12,7 @@ public interface SellerRepository extends JpaRepository<Seller, Long> {
 
     Optional<Seller> findByUser(User user);
 
+    // Tambahan untuk mencari seller langsung berdasarkan email pada entitas User yang berelasi
+    Optional<Seller> findByUser_Email(String email);
+
 }

@@ -45,7 +45,6 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
-    // Konfigurasi CORS agar frontend (Expo Web) diizinkan mengakses backend
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -64,7 +63,7 @@ public class SecurityConfig {
             HttpSecurity http
     ) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Mengaktifkan CORS di Spring Security
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(
@@ -73,22 +72,26 @@ public class SecurityConfig {
                 )
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests(auth -> auth
-                        // Wajib: Mengizinkan request OPTIONS untuk preflight CORS dari browser
+                        // Wajib: Mengizinkan request OPTIONS untuk preflight CORS
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // MEMBUKA AKSES PUBLIK UNTUK LOGIN & REGISTER
                         .requestMatchers(
-                                "/api/auth/login",
-                                "/api/auth/register",
+                                "/api/auth/**",
+                                "/auth/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
-                        )
-                        .permitAll()
-                        // Mengizinkan semua method (GET, PUT, DELETE, POST) untuk endpoint /api/users/** bagi user yang sudah terautentikasi
-                        .requestMatchers(HttpMethod.GET, "/api/users/**").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/api/users/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/api/users/**").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/api/users/**").authenticated()
-                        .anyRequest()
-                        .authenticated()
+                        ).permitAll()
+
+                        // Membuka akses GET publik untuk data gunung
+                        .requestMatchers(HttpMethod.GET, "/api/mountains/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/mountains/**").permitAll()
+
+                        // IZINKAN AKSES ENDPOINT SELLER PRODUK DENGAN OTORISASI TOKEN
+                        .requestMatchers("/api/products/seller/**", "/products/seller/**").hasAnyRole("SELLER", "ADMIN")
+
+                        // Semua endpoint lainnya wajib melewati autentikasi token JWT
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(
                         jwtAuthenticationFilter,

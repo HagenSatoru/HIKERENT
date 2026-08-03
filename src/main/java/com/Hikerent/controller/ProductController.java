@@ -61,7 +61,13 @@ public class ProductController {
                 productService.getByOrganizerId(organizerId)
         );
     }
-
+    // Tambahkan endpoint ini di ProductController.java
+    @GetMapping("/seller")
+    public ResponseEntity<List<ProductResponse>> getByCurrentSeller(java.security.Principal principal) {
+        // Ambil email/username dari token yang sedang login (principal.getName())
+        // Lalu cari produk berdasarkan seller tersebut melalui productService
+        return ResponseEntity.ok(productService.getBySellerEmail(principal.getName()));
+    }
     @GetMapping("/search")
     public ResponseEntity<List<ProductResponse>> search(
             @RequestParam String keyword) {

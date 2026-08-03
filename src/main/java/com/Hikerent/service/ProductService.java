@@ -16,6 +16,7 @@ public interface ProductService {
     List<ProductResponse> getAll();
 
     List<ProductResponse> getByOrganizerId(Long organizerId);
+    List<ProductResponse> getBySellerEmail(String email);
 
     List<ProductResponse> search(String keyword);
 
