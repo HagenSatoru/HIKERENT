@@ -82,6 +82,11 @@ public class SecurityConfig {
                                 "/v3/api-docs/**"
                         )
                         .permitAll()
+                        // Mengizinkan semua method (GET, PUT, DELETE, POST) untuk endpoint /api/users/** bagi user yang sudah terautentikasi
+                        .requestMatchers(HttpMethod.GET, "/api/users/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/users/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/users/**").authenticated()
                         .anyRequest()
                         .authenticated()
                 )

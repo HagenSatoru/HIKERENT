@@ -106,7 +106,37 @@ public class UserController {
 
     }
 
+    // =========================
+    // UPDATE USER ROLE (/api/users/{id}/role)
+    // =========================
+    @PutMapping("/{id}/role")
+    public ResponseEntity<UserResponse> updateRole(
+            @PathVariable Long id,
+            @RequestBody java.util.Map<String, String> requestBody
+    ) {
+        String roleStr = requestBody.get("role");
 
+        // Ambil data user berdasarkan ID
+        UserResponse user = userService.getById(id);
+
+        // Buat objek request baru untuk memperbarui role
+        UserRequest updateRequest = new UserRequest();
+        updateRequest.setNama(user.getNama());
+        updateRequest.setUsername(user.getUsername());
+        updateRequest.setEmail(user.getEmail());
+        updateRequest.setNoHp(user.getNoHp());
+        updateRequest.setAlamat(user.getAlamat());
+        updateRequest.setFoto(user.getFoto());
+
+        // Konversi String ke enum Role (misal: "CUSTOMER" -> Role.CUSTOMER)
+        if (roleStr != null && !roleStr.trim().isEmpty()) {
+            updateRequest.setRole(com.Hikerent.enums.Role.valueOf(roleStr.toUpperCase()));
+        }
+
+        return ResponseEntity.ok(
+                userService.update(id, updateRequest)
+        );
+    }
 
     @GetMapping("/profile")
     public ResponseEntity<UserResponse> getProfile(Authentication authentication) {

@@ -9,30 +9,18 @@ import java.time.LocalDateTime;
 public class JoinPartnerResponse {
 
     private Long id;
-
+    private Long userId;
     private String tipePartner;
-
     private String namaUsaha;
-
-    private String status;
-
+    private JoinPartnerStatus status;
     private LocalDateTime tanggalDaftar;
 
-    public void setUserId(Long id) {
-    }
+    // TAMBAHKAN / PASTIKAN ATRIBUT INI ADA:
+    private String alamat;
+    private String nomorTelepon;
+    private String email;
+    private String deskripsi;
 
-    public void setAlamat(String alamat) {
-    }
-
-    public void setNomorTelepon(String nomorWhatsapp) {
-    }
-
-    public void setEmail(String emailUsaha) {
-    }
-
-    public void setDeskripsi(String deskripsi) {
-    }
-
-    public void setStatus(JoinPartnerStatus status) {
-    }
+    // JANGAN ADA method set...() manual di sini,
+    // karena anotasi @Data dari Lombok sudah membuatkannya secara otomatis!
 }
